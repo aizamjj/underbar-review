@@ -90,10 +90,27 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    return _.filter(collection, function(element) {
+      return !test(element);
+    });
   };
 
   // Produce a duplicate-free version of the array.
+
+  // var iterator = function(value) { return value === 1; };
+  // var numbers = [1, 2, 2, 3, 4, 4];
   _.uniq = function(array, isSorted, iterator) {
+    var result = [];
+    var uniqueValues = {};
+    iterator = iterator || _.identity;
+
+    _.each(array, function(element) {
+      if (uniqueValues[iterator(element)] === undefined) {
+        uniqueValues[iterator(element)] = element;
+        result.push(element);
+      }
+    });
+    return result;
   };
 
 
